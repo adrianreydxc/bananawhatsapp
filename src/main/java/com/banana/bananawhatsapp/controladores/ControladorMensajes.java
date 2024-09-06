@@ -9,7 +9,7 @@ import java.util.List;
 public class ControladorMensajes {
     private IServicioMensajeria servicioMensajeria;
 
-    public boolean enviarMensaje(Integer remitente, Integer destinatario, String texto) {
+    public boolean enviarMensaje(Long remitente, Long destinatario, String texto) {
         try {
             Usuario uRemitente = new Usuario();
             uRemitente.setId(remitente);
@@ -26,7 +26,7 @@ public class ControladorMensajes {
 
     }
 
-    public boolean mostrarChat(Integer remitente, Integer destinatario) {
+    public boolean mostrarChat(Long remitente, Long destinatario) {
         try {
             Usuario uRemitente = new Usuario();
             uRemitente.setId(remitente);
@@ -50,7 +50,7 @@ public class ControladorMensajes {
 
     }
 
-    public boolean eliminarChatConUsuario(Integer remitente, Integer destinatario) {
+    public boolean eliminarChatConUsuario(Long remitente, Long destinatario) {
         try {
             Usuario uRemitente = new Usuario();
             uRemitente.setId(remitente);

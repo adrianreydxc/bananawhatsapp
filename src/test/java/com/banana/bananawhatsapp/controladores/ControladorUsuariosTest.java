@@ -29,7 +29,7 @@ class ControladorUsuariosTest {
         controladorUsuarios.alta(nuevo);
 
         assertThat(nuevo, notNullValue());
-        assertThat(nuevo.getId(), greaterThan(0));
+        assertThat(nuevo.getId(), greaterThan(0L));
     }
 
     @Test
@@ -42,22 +42,22 @@ class ControladorUsuariosTest {
 
     @Test
     void dadoUsuarioValido_cuandoActualizar_entoncesUsuarioValido() throws Exception {
-        Integer iDUser = 2;
+        Long iDUser = 2L;
         LocalDate fecha = LocalDate.parse("2023-12-17");
-        Usuario user = repoUser.obtener(iDUser);
+        Usuario user = repoUser.findById(iDUser).orElseThrow();
         user.setNombre("Juan Luis");
         user.setEmail("jl@jll.com");
         user.setAlta(fecha);
         controladorUsuarios.actualizar(user);
-        assertThat(repoUser.obtener(iDUser).getNombre(), is("Juan Luis"));
+        assertThat(repoUser.findById(iDUser).orElseThrow().getNombre(), is("Juan Luis"));
     }
 
     @Test
     void dadoUsuarioNOValido_cuandoActualizar_entoncesExcepcion() {
         assertThrows(UsuarioException.class, () -> {
-            Integer iDUser = 3;
+            Long iDUser = 3L;
             LocalDate fecha = LocalDate.parse("2025-12-17");
-            Usuario user = repoUser.obtener(iDUser);
+            Usuario user = repoUser.findById(iDUser).orElseThrow();
             user.setNombre("Juan Luis");
             user.setEmail("jl@jll.com");
             user.setAlta(fecha);
@@ -67,14 +67,14 @@ class ControladorUsuariosTest {
 
     @Test
     void dadoUsuarioValido_cuandoBaja_entoncesUsuarioValido() throws Exception {
-        Usuario user = repoUser.obtener(1);
+        Usuario user = repoUser.findById(1L).orElseThrow();
         boolean ok = controladorUsuarios.baja(user);
         assertThat(ok, is(true));
     }
 
     @Test
     void dadoUsuarioNOValido_cuandoBaja_entoncesExcepcion() {
-        Usuario user = new Usuario(-1, null, null, null, true);
+        Usuario user = new Usuario(-1L, null, null, null, true);
         assertThrows(Exception.class, () -> {
             controladorUsuarios.baja(user);
         });

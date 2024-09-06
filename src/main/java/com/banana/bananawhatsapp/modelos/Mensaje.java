@@ -15,7 +15,7 @@ import java.time.LocalDate;
 public class Mensaje {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @ManyToOne()
     @JoinColumn(name = "from_user")

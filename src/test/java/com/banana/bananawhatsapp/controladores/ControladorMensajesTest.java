@@ -21,8 +21,8 @@ class ControladorMensajesTest {
     }
     @Test
     void dadoRemitenteYDestinatarioYTextoValidos_cuandoEnviarMensaje_entoncesOK() {
-        Integer remitente = 1;
-        Integer destinatario = 2;
+        Long remitente = 1L;
+        Long destinatario = 2L;
         String texto = "Perfecto! Muchas gracias!";
         boolean sendMessage = controladorMensajes.enviarMensaje(remitente, destinatario, texto);
         assertTrue(sendMessage);
@@ -30,8 +30,8 @@ class ControladorMensajesTest {
 
     @Test
     void dadoRemitenteYDestinatarioYTextoNOValidos_cuandoEnviarMensaje_entoncesExcepcion() {
-        Integer remitente = 1;
-        Integer destinatario = 2;
+        Long remitente = 1L;
+        Long destinatario = 2L;
         String texto = "SMS < 10";
         assertThrows(Exception.class, () -> {
             controladorMensajes.enviarMensaje(remitente, destinatario, texto);
@@ -40,16 +40,16 @@ class ControladorMensajesTest {
 
     @Test
     void dadoRemitenteYDestinatarioValidos_cuandoMostrarChat_entoncesOK() {
-        Integer remitente = 1;
-        Integer destinatario = 2;
+        Long remitente = 1L;
+        Long destinatario = 2L;
         boolean mostrarChat = controladorMensajes.mostrarChat(remitente, destinatario);
         assertTrue(mostrarChat);
     }
 
     @Test
     void dadoRemitenteYDestinatarioNOValidos_cuandoMostrarChat_entoncesExcepcion() {
-        Integer remitente = 2;
-        Integer destinatario = -1;
+        Long remitente = 2L;
+        Long destinatario = -1L;
         assertThrows(Exception.class, () -> {
             controladorMensajes.mostrarChat(remitente, destinatario);
         });
@@ -57,16 +57,16 @@ class ControladorMensajesTest {
 
     @Test
     void dadoRemitenteYDestinatarioValidos_cuandoEliminarChatConUsuario_entoncesOK() {
-        Integer remitente = 1;
-        Integer destinatario = 2;
+        Long remitente = 1L;
+        Long destinatario = 2L;
         boolean eliminarChat = controladorMensajes.eliminarChatConUsuario(remitente, destinatario);
         assertTrue(eliminarChat);
     }
 
     @Test
     void dadoRemitenteYDestinatarioNOValidos_cuandoEliminarChatConUsuario_entoncesExcepcion() {
-        Integer remitente = -1;
-        Integer destinatario = 5;
+        Long remitente = -1L;
+        Long destinatario = 5L;
         assertThrows(Exception.class, () -> {
             controladorMensajes.eliminarChatConUsuario(remitente, destinatario);
         });

@@ -6,7 +6,9 @@ import com.banana.bananawhatsapp.util.DBUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,7 +30,7 @@ class ServicioUsuariosTest {
         servicio.crearUsuario(nuevo);
 
         assertThat(nuevo, notNullValue());
-        assertThat(nuevo.getId(), greaterThan(0));
+        assertThat(nuevo.getId(), greaterThan(0L));
     }
 
     @Test
@@ -41,14 +43,14 @@ class ServicioUsuariosTest {
 
     @Test
     void dadoUnUsuarioValido_cuandoBorrarUsuario_entoncesUsuarioValido() {
-        Usuario user = new Usuario(2, "Gema", "g@g.com", LocalDate.now(), true);
+        Usuario user = new Usuario(2L, "Gema", "g@g.com", LocalDate.now(), true);
         boolean userDelete = servicio.borrarUsuario(user);
         assertThat(userDelete, is(true));
     }
 
     @Test
     void dadoUnUsuarioNOValido_cuandoBorrarUsuario_entoncesExcepcion() {
-        Usuario user = new Usuario(-1, "John", "j@j.com", LocalDate.now(), false);
+        Usuario user = new Usuario(-1L, "John", "j@j.com", LocalDate.now(), false);
         assertThrows(UsuarioException.class, () -> {
             servicio.borrarUsuario(user);
         });
@@ -56,7 +58,7 @@ class ServicioUsuariosTest {
 
     @Test
     void dadoUnUsuarioValido_cuandoActualizarUsuario_entoncesUsuarioValido() {
-        Integer iDUser = 1;
+        Long iDUser = 1L;
         Usuario user = new Usuario(iDUser, "Juan", "j@j.com", LocalDate.now(), true);
         Usuario userUpdate = servicio.actualizarUsuario(user);
         assertThat(userUpdate.getEmail(), is("j@j.com"));
@@ -64,24 +66,24 @@ class ServicioUsuariosTest {
 
     @Test
     void dadoUnUsuarioNOValido_cuandoActualizarUsuario_entoncesExcepcion() {
-        Usuario user = new Usuario(1, "Juan", "j@j.com", LocalDate.now(), false);
+        Usuario user = new Usuario(1L, "Juan", "j@j.com", LocalDate.now(), false);
         assertThrows(UsuarioException.class, () -> {
             servicio.actualizarUsuario(user);
         });
     }
 
     @Test
-    void dadoUnUsuarioValido_cuandoObtenerPosiblesDesinatarios_entoncesUsuariosValidos() {
+    void dadoUnUsuarioValido_cuandoObtenerPosiblesDesinatarios_entoncesUsuariosValidos() throws SQLException {
         int numPosibles = 100;
-        Usuario user = new Usuario(1, "Juan", "j@j.com", LocalDate.now(), true);
+        Usuario user = new Usuario(1L, "Juan", "j@j.com", LocalDate.now(), true);
 
-        Set<Usuario> conjuntoDestinatarios = servicio.obtenerPosiblesDesinatarios(user, numPosibles);
+        List<Usuario> conjuntoDestinatarios = servicio.obtenerPosiblesDesinatarios(user, numPosibles);
         assertThat(conjuntoDestinatarios.size(), lessThanOrEqualTo(numPosibles));
     }
 
     @Test
     void dadoUnUsuarioNOValido_cuandoObtenerPosiblesDesinatarios_entoncesExcepcion() {
-        Usuario user = new Usuario(-1, null, null, null, true);
+        Usuario user = new Usuario(-1L, null, null, null, true);
         int numPosibles = 100;
         assertThrows(UsuarioException.class, () -> {
             servicio.obtenerPosiblesDesinatarios(user, numPosibles);

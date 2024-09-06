@@ -24,17 +24,17 @@ class ServicioMensajeriaTest {
 
     @Test
     void dadoRemitenteYDestinatarioYTextoValido_cuandoEnviarMensaje_entoncesMensajeValido() throws Exception {
-        Usuario remitente = repoUsuario.obtener(1);
-        Usuario destinatario = repoUsuario.obtener(2);
+        Usuario remitente = repoUsuario.findById(1L).orElseThrow();
+        Usuario destinatario = repoUsuario.findById(2L).orElseThrow();
         String texto = "Felices Fiestas!";
         Mensaje message = servicio.enviarMensaje(remitente, destinatario, texto);
-        assertThat(message.getId(), greaterThan(0));
+        assertThat(message.getId(), greaterThan(0L));
     }
 
     @Test
     void dadoRemitenteYDestinatarioYTextoNOValido_cuandoEnviarMensaje_entoncesExcepcion() throws Exception {
-        Usuario remitente = repoUsuario.obtener(1);
-        Usuario destinatario = repoUsuario.obtener(2);
+        Usuario remitente = repoUsuario.findById(1L).orElseThrow();
+        Usuario destinatario = repoUsuario.findById(2L).orElseThrow();
         String texto = "SMS < 10";
         assertThrows(Exception.class, () -> {
             servicio.enviarMensaje(remitente, destinatario, texto);
@@ -44,8 +44,8 @@ class ServicioMensajeriaTest {
 
     @Test
     void dadoRemitenteYDestinatarioValido_cuandoMostrarChatConUsuario_entoncesListaMensajes() throws Exception {
-        Usuario remitente = repoUsuario.obtener(1);
-        Usuario destinatario = repoUsuario.obtener(2);
+        Usuario remitente = repoUsuario.findById(1L).orElseThrow();
+        Usuario destinatario = repoUsuario.findById(2L).orElseThrow();
 
         List<Mensaje> userMessages = servicio.mostrarChatConUsuario(remitente, destinatario);
         assertNotNull(userMessages);
@@ -53,8 +53,8 @@ class ServicioMensajeriaTest {
 
     @Test
     void dadoRemitenteYDestinatarioNOValido_cuandoMostrarChatConUsuario_entoncesExcepcion() throws Exception {
-        Usuario remitente = repoUsuario.obtener(1);
-        Usuario destinatario = new Usuario(2, null, null, null, false);
+        Usuario remitente = repoUsuario.findById(1L).orElseThrow();
+        Usuario destinatario = new Usuario(2L, null, null, null, false);
         assertThrows(Exception.class, () -> {
             List<Mensaje> userMessages = servicio.mostrarChatConUsuario(remitente, destinatario);
         });
@@ -62,16 +62,16 @@ class ServicioMensajeriaTest {
 
     @Test
     void dadoRemitenteYDestinatarioValido_cuandoBorrarChatConUsuario_entoncesOK() throws Exception {
-        Usuario remitente = repoUsuario.obtener(1);
-        Usuario destinatario = repoUsuario.obtener(2);
+        Usuario remitente = repoUsuario.findById(1L).orElseThrow();
+        Usuario destinatario = repoUsuario.findById(2L).orElseThrow();
         boolean borrarChat = servicio.borrarChatConUsuario(remitente, destinatario);
         assertTrue(borrarChat);
     }
 
     @Test
     void dadoRemitenteYDestinatarioNOValido_cuandoBorrarChatConUsuario_entoncesExcepcion() throws Exception {
-        Usuario remitente = repoUsuario.obtener(1);
-        Usuario destinatario = new Usuario(2, null, null, null, false);
+        Usuario remitente = repoUsuario.findById(1L).orElseThrow();
+        Usuario destinatario = new Usuario(2L, null, null, null, false);
         assertThrows(Exception.class, () -> {
             boolean borrarChat = servicio.borrarChatConUsuario(remitente, destinatario);
         });

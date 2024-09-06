@@ -11,7 +11,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @PropertySource("classpath:application.properties")
 @EnableJpaRepositories(basePackages = {"com.banana.bananawhatsapp.persistencia"})
-
 public class SpringConfig {
 
 }
