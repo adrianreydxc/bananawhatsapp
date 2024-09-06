@@ -10,7 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-    @ExtendWith(SpringExtension.class)
+@ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {SpringConfig.class})
 @EnableAutoConfiguration
 class BananaWhatsAppApplicationTest {
@@ -19,6 +19,4 @@ class BananaWhatsAppApplicationTest {
         DBUtil.reloadDB();
         assertTrue(true);
     }
-
-
 }
